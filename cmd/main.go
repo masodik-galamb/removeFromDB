@@ -70,7 +70,11 @@ func createTestData(persons []Person, db *sqlx.DB) error {
 	}
 
 	for _, s := range persons {
-		tx.NamedExec("INSERT INTO person (first_name, last_name, email) VALUES (:first_name, :last_name, :email, :created_at)", &s)
+
+		_, err = tx.NamedExec("INSERT INTO person (first_name, last_name, email) VALUES (:first_name, :last_name, :email, :created_at)", &s)
+		if err != nil {
+			return err
+		}
 	}
 	err = tx.Commit()
 	if err != nil {
