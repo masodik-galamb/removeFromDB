@@ -51,7 +51,7 @@ func main() {
 
 func connectToDB() (*sqlx.DB, error) {
 	dataSourceName := os.Getenv("DATA_SOURCE_NAME")
-	// check if  ENV empty
+
 	db, err := sqlx.Connect(driverName, dataSourceName)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func createTestData(persons []Person, db *sqlx.DB) error {
 
 	for _, s := range persons {
 
-		_, err = tx.NamedExec("INSERT INTO person (first_name, last_name, email) VALUES (:first_name, :last_name, :email, :created_at)", &s)
+		_, err = tx.NamedExec("INSERT INTO person (first_name, last_name, email, created_at) VALUES (:first_name, :last_name, :email, :created_at)", &s)
 		if err != nil {
 			return err
 		}
